@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>justin's things</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@1&display=swap');
 
@@ -36,6 +37,19 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* --- film grain overlay --- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px;
 }
 
 /* --- living gradient canvas --- */
@@ -72,7 +86,14 @@ canvas#bg {
   text-transform: uppercase;
   margin-bottom: 0.75rem;
   min-height: 1.2em;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.3s;
+  user-select: none;
+  -webkit-user-select: none;
 }
+
+.greeting:active { color: var(--mid); }
 
 .logo {
   font-size: clamp(2.4rem, 9vw, 4.2rem);
@@ -132,7 +153,12 @@ canvas#bg {
 }
 
 /* --- cards --- */
-.projects { display: flex; flex-direction: column; gap: 0.5rem; }
+.projects {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  perspective: 1200px;
+}
 
 .card {
   --accent: var(--c1);
@@ -154,6 +180,7 @@ canvas#bg {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   overflow: hidden;
+  transform-style: preserve-3d;
 }
 
 .card:nth-child(1) { --accent: var(--c1); }
@@ -186,7 +213,7 @@ canvas#bg {
   100% { opacity: 0; transform: scale(4); }
 }
 
-/* shimmer sweep on touch */
+/* shimmer sweep */
 .card::before {
   content: '';
   position: absolute;
@@ -240,6 +267,17 @@ canvas#bg {
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
   flex-shrink: 0;
+}
+
+.card-icon span {
+  display: inline-block;
+  animation: float var(--float-dur, 4s) var(--float-delay, 0s) ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-2px) rotate(-2deg); }
+  66% { transform: translateY(1px) rotate(1.5deg); }
 }
 
 .card:active .card-icon {
@@ -320,6 +358,15 @@ canvas#bg {
   z-index: 100;
   letter-spacing: 0.03em;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s;
+}
+
+.footer-pill:active {
+  transform: translateX(-50%) scale(0.95);
 }
 
 .s-dot {
@@ -340,26 +387,20 @@ canvas#bg {
 /* --- confetti burst --- */
 .confetti {
   position: fixed;
-  width: 6px;
-  height: 6px;
-  border-radius: 1px;
   pointer-events: none;
   z-index: 9999;
 }
 
-/* --- pull-to-shuffle indicator --- */
-.pull-indicator {
+/* --- sparkle on tap anywhere --- */
+.sparkle {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.1s;
-  z-index: 200;
-  border-radius: 0 0 2px 2px;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* --- card shuffle animation --- */
+.card.shuffling {
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), opacity 0.3s;
 }
 
 /* --- desktop hover extras --- */
@@ -382,7 +423,6 @@ canvas#bg {
   .card:hover .card-go svg { opacity: 1; }
   .card:hover .card-sub { color: var(--mid); }
 
-  /* mouse trail */
   .trail-dot {
     position: fixed;
     width: 6px;
@@ -394,7 +434,6 @@ canvas#bg {
     transition: opacity 0.6s;
   }
 
-  /* keyboard hint */
   .kbd-hint {
     position: fixed;
     bottom: 4rem;
@@ -444,7 +483,6 @@ canvas#bg {
 
 ::selection { background: rgba(168,85,247,0.12); }
 
-/* touch hint on mobile */
 @media (hover: none) {
   .kbd-hint { display: none !important; }
 }
@@ -453,7 +491,6 @@ canvas#bg {
 <body>
 
 <canvas id="bg"></canvas>
-<div class="pull-indicator" id="pull-indicator"></div>
 
 <div class="shell">
 
@@ -462,12 +499,12 @@ canvas#bg {
     <h1 class="logo">justin's <em>things</em><span class="logo-dot" id="dot"></span></h1>
   </header>
 
-  <div class="divider"><span>projects</span></div>
+  <div class="divider"><span id="divider-text">projects</span></div>
 
   <main class="projects" id="projects">
 
     <a href="https://justinhu-nz.github.io/RadioLive/" class="card" target="_blank" rel="noopener" data-key="1">
-      <div class="card-icon">📻</div>
+      <div class="card-icon" style="--float-dur:3.8s;--float-delay:0s"><span>📻</span></div>
       <div class="card-body">
         <div class="card-title">RadioLive</div>
         <div class="card-sub">nz radio &amp; tv streams, no ads</div>
@@ -476,7 +513,7 @@ canvas#bg {
     </a>
 
     <a href="https://justinhu-nz.github.io/auckland-transit-realtime/" class="card" target="_blank" rel="noopener" data-key="2">
-      <div class="card-icon">🚌</div>
+      <div class="card-icon" style="--float-dur:4.2s;--float-delay:0.5s"><span>🚌</span></div>
       <div class="card-body">
         <div class="card-title">Auckland Transit Realtime</div>
         <div class="card-sub">live bus, train &amp; ferry tracking</div>
@@ -485,7 +522,7 @@ canvas#bg {
     </a>
 
     <a href="https://justinhu-nz.github.io/imagecroponline/" class="card" target="_blank" rel="noopener" data-key="3">
-      <div class="card-icon">✂️</div>
+      <div class="card-icon" style="--float-dur:3.5s;--float-delay:1s"><span>✂️</span></div>
       <div class="card-body">
         <div class="card-title">Image Crop Online</div>
         <div class="card-sub">batch 16:9 crop with blur fill</div>
@@ -494,7 +531,7 @@ canvas#bg {
     </a>
 
     <a href="https://justinhu-nz.github.io/GTFS-frequencyMapper/" class="card" target="_blank" rel="noopener" data-key="4">
-      <div class="card-icon">🗺️</div>
+      <div class="card-icon" style="--float-dur:4.5s;--float-delay:1.5s"><span>🗺️</span></div>
       <div class="card-body">
         <div class="card-title">GTFS Frequency Mapper</div>
         <div class="card-sub">visualise transit frequency from gtfs</div>
@@ -506,11 +543,11 @@ canvas#bg {
 
 </div>
 
-<div class="footer-pill">
+<div class="footer-pill" id="footer-pill">
   <span class="s-dot"></span>
   <span id="ft-time"></span>
   <span class="s-sep">|</span>
-  <span>auckland</span>
+  <span id="ft-location">auckland</span>
   <span class="s-sep">|</span>
   <span id="ft-count">4 things</span>
 </div>
@@ -545,13 +582,10 @@ canvas#bg {
     { x: 0.75, y: 0.65, r: 0.25, color: [254, 215, 170], speed: 0.00045, phase: 1 },
   ];
 
-  let t = 0;
-  let frame = 0;
+  let t = 0, frame = 0;
   function draw() {
     frame++;
-    // on mobile, only draw every 2nd frame to save battery
     if (isMobile && frame % 2 !== 0) { requestAnimationFrame(draw); return; }
-
     ctx.clearRect(0, 0, w, h);
     blobs.forEach(b => {
       const bx = (b.x + Math.sin(t * b.speed * 6 + b.phase) * 0.08) * w;
@@ -569,11 +603,46 @@ canvas#bg {
   draw();
 })();
 
-// --- greeting ---
+// --- greeting: tappable, cycles through quirky messages ---
 (function() {
   const h = new Date().getHours();
-  const text = h < 5 ? "you're up late" : h < 7 ? "early bird" : h < 12 ? "good morning" : h < 17 ? "good afternoon" : h < 21 ? "good evening" : "night owl";
-  document.getElementById('greeting').textContent = text;
+  const timeGreet = h < 5 ? "you're up late" : h < 7 ? "early bird" : h < 12 ? "good morning" : h < 17 ? "good afternoon" : h < 21 ? "good evening" : "night owl";
+
+  const extras = [
+    timeGreet,
+    "welcome back",
+    "nice to see you",
+    "hey there ✦",
+    "let's build something",
+    "shipping > planning",
+    "git push --force",
+    "0 bugs found (lie)",
+    "works on my machine",
+    "npm install everything",
+    "localhost:3000 energy",
+    "console.log('hi')",
+    "ctrl+z is self care",
+    "rm -rf doubts",
+    "404 boredom not found",
+  ];
+
+  let idx = 0;
+  const el = document.getElementById('greeting');
+  el.textContent = extras[0];
+
+  el.addEventListener('click', () => {
+    idx = (idx + 1) % extras.length;
+    el.style.transition = 'none';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(4px)';
+    setTimeout(() => {
+      el.textContent = extras[idx];
+      el.style.transition = 'opacity 0.25s, transform 0.25s cubic-bezier(0.22,1,0.36,1)';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 100);
+    if (navigator.vibrate) navigator.vibrate(8);
+  });
 })();
 
 // --- clock ---
@@ -583,6 +652,64 @@ function tick() {
 }
 tick();
 setInterval(tick, 1000);
+
+// --- animated favicon: cycle color ---
+(function() {
+  const colors = ['#4f7df5','#a855f7','#0ea672','#ef8633'];
+  let ci = 0;
+  setInterval(() => {
+    ci = (ci + 1) % colors.length;
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='${colors[ci]}'/></svg>`;
+    let link = document.querySelector("link[rel~='icon']");
+    if (link) link.href = 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }, 3000);
+})();
+
+// --- tab title easter egg ---
+(function() {
+  const titles = ["justin's things", "justin's things ✦", "justin's things ◆", "justin's things ●"];
+  let ti = 0;
+  setInterval(() => {
+    ti = (ti + 1) % titles.length;
+    document.title = titles[ti];
+  }, 4000);
+})();
+
+// --- sparkle on tap anywhere (mobile) ---
+if (matchMedia('(hover: none)').matches) {
+  document.addEventListener('touchstart', e => {
+    const touch = e.touches[0];
+    spawnSparkles(touch.clientX, touch.clientY, 4);
+  }, { passive: true });
+}
+
+function spawnSparkles(x, y, count) {
+  const chars = ['✦','✧','◆','●'];
+  const colors = ['var(--c1)','var(--c2)','var(--c3)','var(--c4)'];
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = x + 'px';
+    s.style.top = y + 'px';
+    s.style.fontSize = (6 + Math.random() * 8) + 'px';
+    s.style.color = colors[i % 4];
+    s.textContent = chars[i % 4];
+    document.body.appendChild(s);
+
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 20 + Math.random() * 35;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist;
+
+    s.animate([
+      { transform: 'translate(0,0) scale(0) rotate(0deg)', opacity: 1 },
+      { transform: `translate(${dx}px,${dy}px) scale(1) rotate(${Math.random()*180-90}deg)`, opacity: 1, offset: 0.3 },
+      { transform: `translate(${dx*1.5}px,${dy*1.5+15}px) scale(0) rotate(${Math.random()*360}deg)`, opacity: 0 }
+    ], { duration: 500 + Math.random() * 200, easing: 'cubic-bezier(0.22,1,0.36,1)', fill: 'forwards' });
+
+    setTimeout(() => s.remove(), 800);
+  }
+}
 
 // --- touch ripple on cards ---
 document.querySelectorAll('.card').forEach(card => {
@@ -599,15 +726,9 @@ document.querySelectorAll('.card').forEach(card => {
     ripple.style.left = (x - size / 2) + 'px';
     ripple.style.top = (y - size / 2) + 'px';
     card.appendChild(ripple);
-
-    // trigger shimmer
     card.classList.add('shimmer');
-
     requestAnimationFrame(() => ripple.classList.add('go'));
-    setTimeout(() => {
-      ripple.remove();
-      card.classList.remove('shimmer');
-    }, 700);
+    setTimeout(() => { ripple.remove(); card.classList.remove('shimmer'); }, 700);
   }, { passive: true });
 });
 
@@ -616,48 +737,61 @@ let dotTaps = 0;
 document.getElementById('dot').addEventListener('click', e => {
   e.preventDefault();
   dotTaps++;
-
-  // haptic feedback if available
   if (navigator.vibrate) navigator.vibrate(15);
 
-  // confetti burst from the dot
   const dotRect = e.target.getBoundingClientRect();
   const cx = dotRect.left + dotRect.width / 2;
   const cy = dotRect.top + dotRect.height / 2;
   const colors = ['#4f7df5','#a855f7','#0ea672','#ef8633','#f472b6','#facc15'];
 
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 22; i++) {
     const piece = document.createElement('div');
     piece.className = 'confetti';
     piece.style.left = cx + 'px';
     piece.style.top = cy + 'px';
     piece.style.background = colors[i % colors.length];
-    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '1px';
-    piece.style.width = (4 + Math.random() * 4) + 'px';
-    piece.style.height = (4 + Math.random() * 4) + 'px';
+
+    // varied shapes
+    const shapeRoll = Math.random();
+    if (shapeRoll < 0.33) {
+      piece.style.width = (4 + Math.random() * 4) + 'px';
+      piece.style.height = (4 + Math.random() * 4) + 'px';
+      piece.style.borderRadius = '50%';
+    } else if (shapeRoll < 0.66) {
+      piece.style.width = (3 + Math.random() * 3) + 'px';
+      piece.style.height = (8 + Math.random() * 6) + 'px';
+      piece.style.borderRadius = '1px';
+    } else {
+      piece.style.width = '0';
+      piece.style.height = '0';
+      piece.style.background = 'transparent';
+      piece.style.borderLeft = '3px solid transparent';
+      piece.style.borderRight = '3px solid transparent';
+      piece.style.borderBottom = `6px solid ${colors[i % colors.length]}`;
+    }
     document.body.appendChild(piece);
 
-    const angle = (Math.PI * 2 / 18) * i + (Math.random() - 0.5) * 0.5;
-    const velocity = 80 + Math.random() * 120;
+    const angle = (Math.PI * 2 / 22) * i + (Math.random() - 0.5) * 0.5;
+    const velocity = 90 + Math.random() * 140;
     const vx = Math.cos(angle) * velocity;
-    const vy = Math.sin(angle) * velocity - 40;
+    const vy = Math.sin(angle) * velocity - 50;
     const rotation = Math.random() * 720 - 360;
 
     piece.animate([
-      { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
-      { transform: `translate(${vx}px, ${vy + 100}px) rotate(${rotation}deg)`, opacity: 0 }
-    ], { duration: 600 + Math.random() * 400, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'forwards' });
+      { transform: 'translate(0, 0) rotate(0deg) scale(1)', opacity: 1 },
+      { transform: `translate(${vx * 0.6}px, ${vy * 0.4}px) rotate(${rotation * 0.5}deg) scale(1.2)`, opacity: 1, offset: 0.3 },
+      { transform: `translate(${vx}px, ${vy + 120}px) rotate(${rotation}deg) scale(0.3)`, opacity: 0 }
+    ], { duration: 700 + Math.random() * 400, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'forwards' });
 
-    setTimeout(() => piece.remove(), 1100);
+    setTimeout(() => piece.remove(), 1200);
   }
 
-  // hue shift
   document.body.style.transition = 'filter 0.6s';
-  document.body.style.filter = `hue-rotate(${(dotTaps * 60) % 360}deg)`;
+  document.body.style.filter = `hue-rotate(${(dotTaps * 55) % 360}deg)`;
   setTimeout(() => { document.body.style.filter = 'hue-rotate(0deg)'; }, 1500);
 });
 
-// --- long-press on card = peek (vibrate + accent glow) ---
+// --- long-press on card = accent glow ---
 let longPressTimer;
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('touchstart', () => {
@@ -665,23 +799,109 @@ document.querySelectorAll('.card').forEach(card => {
       if (navigator.vibrate) navigator.vibrate([10, 30, 10]);
       card.style.boxShadow = `0 0 0 2px var(--accent), 0 0 40px color-mix(in srgb, var(--accent) 25%, transparent)`;
       card.style.transition = 'box-shadow 0.2s';
-      setTimeout(() => {
-        card.style.boxShadow = '';
-        card.style.transition = '';
-      }, 800);
+      setTimeout(() => { card.style.boxShadow = ''; card.style.transition = ''; }, 800);
     }, 400);
   }, { passive: true });
   card.addEventListener('touchend', () => clearTimeout(longPressTimer), { passive: true });
   card.addEventListener('touchmove', () => clearTimeout(longPressTimer), { passive: true });
 });
 
-// --- tilt cards on device gyroscope ---
+// --- shake to shuffle cards (mobile) ---
+if (matchMedia('(hover: none)').matches && window.DeviceMotionEvent) {
+  let lastShake = 0;
+  let shakeCount = 0;
+  let lastAccel = { x: 0, y: 0, z: 0 };
+
+  window.addEventListener('devicemotion', e => {
+    const a = e.accelerationIncludingGravity;
+    if (!a) return;
+    const dx = Math.abs(a.x - lastAccel.x);
+    const dy = Math.abs(a.y - lastAccel.y);
+    const dz = Math.abs(a.z - lastAccel.z);
+    lastAccel = { x: a.x, y: a.y, z: a.z };
+
+    if (dx + dy + dz > 30) {
+      const now = Date.now();
+      if (now - lastShake > 1000) {
+        lastShake = now;
+        shuffleCards();
+      }
+    }
+  });
+
+  function shuffleCards() {
+    if (navigator.vibrate) navigator.vibrate([15, 50, 15]);
+    const container = document.getElementById('projects');
+    const cards = [...container.querySelectorAll('.card')];
+
+    // animate out
+    cards.forEach((c, i) => {
+      c.classList.add('shuffling');
+      c.style.transform = `translateX(${(Math.random() - 0.5) * 40}px) rotate(${(Math.random() - 0.5) * 8}deg) scale(0.95)`;
+      c.style.opacity = '0.5';
+    });
+
+    setTimeout(() => {
+      // fisher-yates shuffle
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        container.appendChild(cards[j]);
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+      }
+
+      // animate back in
+      cards.forEach((c, i) => {
+        setTimeout(() => {
+          c.style.transform = '';
+          c.style.opacity = '';
+          setTimeout(() => c.classList.remove('shuffling'), 500);
+        }, i * 60);
+      });
+    }, 300);
+  }
+}
+
+// --- footer pill: tap to cycle fun facts ---
+(function() {
+  const facts = [
+    () => {
+      const el = document.getElementById('ft-location');
+      const locs = ['auckland', '36.8°S', 'nz 🥝', 'tāmaki', 'akl ✈️'];
+      const cur = locs.indexOf(el.textContent);
+      el.textContent = locs[(cur + 1) % locs.length];
+    }
+  ];
+
+  document.getElementById('footer-pill').addEventListener('click', () => {
+    if (navigator.vibrate) navigator.vibrate(5);
+    facts[0]();
+  });
+})();
+
+// --- scroll parallax: cards have subtle depth offset ---
+(function() {
+  const cards = document.querySelectorAll('.card');
+  const offsets = [0.03, 0.02, 0.01, 0.005];
+
+  function onScroll() {
+    const scrollY = window.scrollY;
+    cards.forEach((card, i) => {
+      const offset = scrollY * offsets[i];
+      card.style.setProperty('--parallax', offset + 'px');
+    });
+  }
+
+  // only enable if page is scrollable
+  if (document.body.scrollHeight > window.innerHeight * 1.1) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+})();
+
+// --- gyroscope tilt on mobile ---
 if (window.DeviceOrientationEvent && matchMedia('(hover: none)').matches) {
   let tiltEnabled = false;
 
-  // auto-enable on iOS 13+ (no permission needed on Android)
   if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-    // we'll enable on first touch
     document.addEventListener('touchstart', function enableGyro() {
       DeviceOrientationEvent.requestPermission().then(state => {
         if (state === 'granted') tiltEnabled = true;
@@ -695,19 +915,18 @@ if (window.DeviceOrientationEvent && matchMedia('(hover: none)').matches) {
   let lastGamma = 0, lastBeta = 0;
   window.addEventListener('deviceorientation', e => {
     if (!tiltEnabled || e.gamma === null) return;
-    // smooth it
-    lastGamma += (e.gamma - lastGamma) * 0.1;
-    lastBeta += ((e.beta - 40) - lastBeta) * 0.1;
+    lastGamma += (e.gamma - lastGamma) * 0.08;
+    lastBeta += ((e.beta - 40) - lastBeta) * 0.08;
 
-    document.querySelectorAll('.card').forEach(card => {
-      card.style.transform = `perspective(800px) rotateY(${lastGamma * 0.15}deg) rotateX(${-lastBeta * 0.1}deg)`;
+    document.querySelectorAll('.card').forEach((card, i) => {
+      const depth = 1 + i * 0.15;
+      card.style.transform = `perspective(800px) rotateY(${lastGamma * 0.12 * depth}deg) rotateX(${-lastBeta * 0.08 * depth}deg)`;
     });
   });
 }
 
-// --- desktop: card 3d tilt + mouse trail + keyboard ---
+// --- desktop: 3d tilt + mouse trail + keyboard ---
 if (matchMedia('(hover: hover)').matches) {
-  // 3d tilt
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('mousemove', e => {
       const rect = card.getBoundingClientRect();
@@ -724,7 +943,6 @@ if (matchMedia('(hover: hover)').matches) {
     });
   });
 
-  // mouse trail
   const colors = ['#4f7df5','#a855f7','#0ea672','#ef8633'];
   let trailIdx = 0, lastTrail = 0;
   document.addEventListener('mousemove', e => {
@@ -742,7 +960,6 @@ if (matchMedia('(hover: hover)').matches) {
     setTimeout(() => dot.remove(), 700);
   });
 
-  // keyboard nav
   document.addEventListener('keydown', e => {
     if (['1','2','3','4'].includes(e.key)) {
       const card = document.querySelector(`.card[data-key="${e.key}"]`);
