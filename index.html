@@ -442,6 +442,69 @@ canvas#bg {
   .card-wip:hover .card-sub { color: var(--mid); }
 }
 
+/* per-project color variants */
+.wip-archive {
+  border-color: color-mix(in srgb, #d97706 35%, transparent);
+}
+.wip-archive::before {
+  background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(217,119,6,0.04) 8px, rgba(217,119,6,0.04) 16px);
+  background-size: 22.6px 22.6px;
+}
+.wip-archive::after {
+  background: linear-gradient(90deg, rgba(217,119,6,0.15), rgba(234,179,8,0.15), rgba(217,119,6,0.15));
+  background-size: 200% 100%;
+}
+.wip-archive .card-icon { background: linear-gradient(140deg, #fef3c7, #fde68a); }
+.wip-archive .wip-progress-bar { background: linear-gradient(90deg, #d97706, #f59e0b); }
+.wip-archive .card-icon span { animation-delay: 0s; }
+
+.wip-hansard {
+  border-color: color-mix(in srgb, #4f46e5 30%, transparent);
+}
+.wip-hansard::before {
+  background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(79,70,229,0.035) 8px, rgba(79,70,229,0.035) 16px);
+  background-size: 22.6px 22.6px;
+}
+.wip-hansard::after {
+  background: linear-gradient(90deg, rgba(79,70,229,0.12), rgba(129,140,248,0.12), rgba(79,70,229,0.12));
+  background-size: 200% 100%;
+  animation-delay: -1s;
+}
+.wip-hansard .card-icon { background: linear-gradient(140deg, #e0e7ff, #c7d2fe); }
+.wip-hansard .wip-progress-bar { background: linear-gradient(90deg, #4f46e5, #818cf8); }
+.wip-hansard .card-icon span { animation-delay: -0.6s; }
+
+.wip-monitor {
+  border-color: color-mix(in srgb, #059669 30%, transparent);
+}
+.wip-monitor::before {
+  background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(5,150,105,0.035) 8px, rgba(5,150,105,0.035) 16px);
+  background-size: 22.6px 22.6px;
+}
+.wip-monitor::after {
+  background: linear-gradient(90deg, rgba(5,150,105,0.12), rgba(52,211,153,0.12), rgba(5,150,105,0.12));
+  background-size: 200% 100%;
+  animation-delay: -2s;
+}
+.wip-monitor .card-icon { background: linear-gradient(140deg, #d1fae5, #a7f3d0); }
+.wip-monitor .wip-progress-bar { background: linear-gradient(90deg, #059669, #34d399); }
+.wip-monitor .card-icon span { animation-delay: -1.2s; }
+
+@media (hover: hover) {
+  .wip-archive:hover {
+    border-color: color-mix(in srgb, #d97706 50%, transparent);
+    box-shadow: 0 0 0 1px rgba(217,119,6,0.06), 0 12px 40px -10px rgba(217,119,6,0.12), 0 0 60px -20px rgba(217,119,6,0.15);
+  }
+  .wip-hansard:hover {
+    border-color: color-mix(in srgb, #4f46e5 45%, transparent);
+    box-shadow: 0 0 0 1px rgba(79,70,229,0.06), 0 12px 40px -10px rgba(79,70,229,0.1), 0 0 60px -20px rgba(79,70,229,0.12);
+  }
+  .wip-monitor:hover {
+    border-color: color-mix(in srgb, #059669 45%, transparent);
+    box-shadow: 0 0 0 1px rgba(5,150,105,0.06), 0 12px 40px -10px rgba(5,150,105,0.1), 0 0 60px -20px rgba(5,150,105,0.12);
+  }
+}
+
 /* text */
 .card-body { min-width: 0; }
 
@@ -701,11 +764,29 @@ canvas#bg {
       <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
 
-    <div class="card-wip" id="card-wip">
-      <div class="card-icon"><span>🚧</span></div>
+    <div class="card-wip wip-archive" data-wip="archive">
+      <div class="card-icon"><span>🗞️</span></div>
       <div class="card-body">
-        <div class="card-title">More Coming Soon</div>
-        <div class="card-sub" id="wip-sub">something's brewing...</div>
+        <div class="card-title">No Lost Stories Archive</div>
+        <div class="card-sub wip-sub">rescuing nz's disappearing journalism</div>
+      </div>
+      <div class="wip-progress"><div class="wip-progress-bar"></div></div>
+    </div>
+
+    <div class="card-wip wip-hansard" data-wip="hansard">
+      <div class="card-icon"><span>🏛️</span></div>
+      <div class="card-body">
+        <div class="card-title">Select Committee Transcripts</div>
+        <div class="card-sub wip-sub">an amateur hansard for nz</div>
+      </div>
+      <div class="wip-progress"><div class="wip-progress-bar"></div></div>
+    </div>
+
+    <div class="card-wip wip-monitor" data-wip="monitor">
+      <div class="card-icon"><span>📻</span></div>
+      <div class="card-body">
+        <div class="card-title">Radio News Monitor</div>
+        <div class="card-sub wip-sub">automated bulletin transcription</div>
       </div>
       <div class="wip-progress"><div class="wip-progress-bar"></div></div>
     </div>
@@ -720,7 +801,7 @@ canvas#bg {
   <span class="s-sep">|</span>
   <span id="ft-location">auckland</span>
   <span class="s-sep">|</span>
-  <span id="ft-count">5 things + 1 brewing</span>
+  <span id="ft-count">5 things + 3 brewing</span>
 </div>
 
 <div class="kbd-hint">press <kbd>1</kbd>–<kbd>5</kbd> to open</div>
@@ -1049,47 +1130,72 @@ if (matchMedia('(hover: none)').matches && window.DeviceMotionEvent) {
   });
 })();
 
-// --- under construction card: tappable easter egg ---
+// --- under construction cards: tappable easter eggs ---
 (function() {
-  const wip = document.getElementById('card-wip');
-  const sub = document.getElementById('wip-sub');
-  const icon = wip.querySelector('.card-icon span');
-  const messages = [
-    { text: "something's brewing...", emoji: '🚧' },
-    { text: 'hammering away...', emoji: '🔨' },
-    { text: 'laying the foundation', emoji: '🏗️' },
-    { text: 'connecting the pipes', emoji: '🔧' },
-    { text: 'almost maybe soon™', emoji: '👷' },
-    { text: 'compiling the vibes', emoji: '⚙️' },
-    { text: 'npm install patience', emoji: '📦' },
-    { text: 'ETA: when it\'s ready', emoji: '🪄' },
-  ];
-  let idx = 0;
+  const projectMessages = {
+    archive: [
+      { text: "rescuing nz's disappearing journalism", emoji: '🗞️' },
+      { text: 'before the links rot away...', emoji: '🔗' },
+      { text: 'scraping the wayback machine', emoji: '🕸️' },
+      { text: 'saving stories, one url at a time', emoji: '💾' },
+      { text: 'nz journalism deserves permanence', emoji: '🏛️' },
+      { text: 'ctrl+s but for the entire internet', emoji: '📰' },
+      { text: '404 not found? not on our watch', emoji: '🛡️' },
+      { text: 'the internet forgets. we won\'t.', emoji: '🗃️' },
+    ],
+    hansard: [
+      { text: 'an amateur hansard for nz', emoji: '🏛️' },
+      { text: 'transcribing democracy in action', emoji: '⚖️' },
+      { text: 'what did that mp actually say?', emoji: '🎙️' },
+      { text: 'select committees, now searchable', emoji: '🔍' },
+      { text: 'whisper meets parliament', emoji: '🤫' },
+      { text: 'making committee work accessible', emoji: '📋' },
+      { text: 'ai-powered accountability', emoji: '🗳️' },
+      { text: 'sunlight is the best disinfectant', emoji: '☀️' },
+    ],
+    monitor: [
+      { text: 'automated bulletin transcription', emoji: '📻' },
+      { text: 'listening to the top of the hour', emoji: '🕐' },
+      { text: 'what\'s setting the news agenda?', emoji: '📡' },
+      { text: 'ffmpeg + whisper + vibes', emoji: '🔊' },
+      { text: 'cron job never sleeps', emoji: '⏰' },
+      { text: 'capturing the airwaves, hourly', emoji: '🌊' },
+      { text: 'radio news → google sheets pipeline', emoji: '📊' },
+      { text: 'needs a name. ideas welcome.', emoji: '🤔' },
+    ],
+  };
 
-  wip.addEventListener('click', () => {
-    idx = (idx + 1) % messages.length;
-    if (navigator.vibrate) navigator.vibrate(8);
+  document.querySelectorAll('.card-wip').forEach(wip => {
+    const sub = wip.querySelector('.wip-sub');
+    const icon = wip.querySelector('.card-icon span');
+    const key = wip.dataset.wip;
+    const messages = projectMessages[key];
+    let idx = 0;
 
-    // animate out
-    sub.style.transition = 'none';
-    sub.style.opacity = '0';
-    sub.style.transform = 'translateY(4px)';
-    icon.style.transition = 'none';
-    icon.style.opacity = '0';
-    icon.style.transform = 'scale(0.5) rotate(-20deg)';
+    wip.addEventListener('click', () => {
+      idx = (idx + 1) % messages.length;
+      if (navigator.vibrate) navigator.vibrate(8);
 
-    setTimeout(() => {
-      sub.textContent = messages[idx].text;
-      icon.textContent = messages[idx].emoji;
+      sub.style.transition = 'none';
+      sub.style.opacity = '0';
+      sub.style.transform = 'translateY(4px)';
+      icon.style.transition = 'none';
+      icon.style.opacity = '0';
+      icon.style.transform = 'scale(0.5) rotate(-20deg)';
 
-      sub.style.transition = 'opacity 0.25s, transform 0.25s cubic-bezier(0.22,1,0.36,1)';
-      sub.style.opacity = '1';
-      sub.style.transform = 'translateY(0)';
+      setTimeout(() => {
+        sub.textContent = messages[idx].text;
+        icon.textContent = messages[idx].emoji;
 
-      icon.style.transition = 'opacity 0.3s, transform 0.4s cubic-bezier(0.22,1,0.36,1)';
-      icon.style.opacity = '1';
-      icon.style.transform = 'scale(1) rotate(0deg)';
-    }, 120);
+        sub.style.transition = 'opacity 0.25s, transform 0.25s cubic-bezier(0.22,1,0.36,1)';
+        sub.style.opacity = '1';
+        sub.style.transform = 'translateY(0)';
+
+        icon.style.transition = 'opacity 0.3s, transform 0.4s cubic-bezier(0.22,1,0.36,1)';
+        icon.style.opacity = '1';
+        icon.style.transform = 'scale(1) rotate(0deg)';
+      }, 120);
+    });
   });
 })();
 
