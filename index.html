@@ -290,6 +290,7 @@ canvas#bg {
 .card:nth-child(3) .card-icon { background: linear-gradient(140deg, #d1fae5, #a8f0cd); }
 .card:nth-child(4) .card-icon { background: linear-gradient(140deg, #ffedd5, #ffddb8); }
 .card:nth-child(5) .card-icon { background: linear-gradient(140deg, #fecaca, #f9a870); }
+.card:nth-child(6) .card-icon { background: linear-gradient(140deg, #e0e7ff, #c4b5fd); }
 
 /* --- under construction card --- */
 .card-wip {
@@ -764,6 +765,15 @@ canvas#bg {
       <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
 
+    <a href="https://justinhu-nz.github.io/gtfs-visualiser/" class="card" target="_blank" rel="noopener" data-key="6">
+      <div class="card-icon" style="--float-dur:4.0s;--float-delay:2.5s"><span>🎬</span></div>
+      <div class="card-body">
+        <div class="card-title">GTFS Transit Visualiser</div>
+        <div class="card-sub">generate transit videos from gtfs data</div>
+      </div>
+      <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+    </a>
+
     <div class="card-wip wip-archive" data-wip="archive">
       <div class="card-icon"><span>🗞️</span></div>
       <div class="card-body">
@@ -801,10 +811,10 @@ canvas#bg {
   <span class="s-sep">|</span>
   <span id="ft-location">auckland</span>
   <span class="s-sep">|</span>
-  <span id="ft-count">5 things + 3 brewing</span>
+  <span id="ft-count">6 things + 3 brewing</span>
 </div>
 
-<div class="kbd-hint">press <kbd>1</kbd>–<kbd>5</kbd> to open</div>
+<div class="kbd-hint">press <kbd>1</kbd>–<kbd>6</kbd> to open</div>
 
 <script>
 // --- animated gradient background (throttled on mobile) ---
@@ -1282,7 +1292,7 @@ if (matchMedia('(hover: hover)').matches) {
   });
 
   document.addEventListener('keydown', e => {
-    if (['1','2','3','4','5'].includes(e.key)) {
+    if (['1','2','3','4','5','6'].includes(e.key)) {
       const card = document.querySelector(`.card[data-key="${e.key}"]`);
       if (card) {
         card.style.transition = 'all 0.15s';
