@@ -187,6 +187,7 @@ canvas#bg {
 .card:nth-child(2) { --accent: var(--c2); }
 .card:nth-child(3) { --accent: var(--c3); }
 .card:nth-child(4) { --accent: var(--c4); }
+.card:nth-child(5) { --accent: #e05a2b; }
 
 /* touch feedback — scale down on press */
 .card:active {
@@ -288,7 +289,7 @@ canvas#bg {
 .card:nth-child(2) .card-icon { background: linear-gradient(140deg, #ede9fe, #ddd2fc); }
 .card:nth-child(3) .card-icon { background: linear-gradient(140deg, #d1fae5, #a8f0cd); }
 .card:nth-child(4) .card-icon { background: linear-gradient(140deg, #ffedd5, #ffddb8); }
-.card:nth-child(5) .card-icon { background: linear-gradient(140deg, #fed7aa, #fdba74); }
+.card:nth-child(5) .card-icon { background: linear-gradient(140deg, #fecaca, #f9a870); }
 
 /* text */
 .card-body { min-width: 0; }
@@ -971,7 +972,7 @@ if (matchMedia('(hover: hover)').matches) {
   });
 
   document.addEventListener('keydown', e => {
-    if (['1','2','3','4'].includes(e.key)) {
+    if (['1','2','3','4','5'].includes(e.key)) {
       const card = document.querySelector(`.card[data-key="${e.key}"]`);
       if (card) {
         card.style.transition = 'all 0.15s';
