@@ -291,6 +291,71 @@ canvas#bg {
 .card:nth-child(4) .card-icon { background: linear-gradient(140deg, #ffedd5, #ffddb8); }
 .card:nth-child(5) .card-icon { background: linear-gradient(140deg, #fecaca, #f9a870); }
 
+/* --- construction zone divider --- */
+.wip-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0 0.2rem;
+  user-select: none;
+}
+
+.wip-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dim);
+  opacity: 0.7;
+  padding: 0 0.3rem;
+}
+
+.wip-cone {
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.wip-cone-1 {
+  animation: cone-wobble 2.5s ease-in-out infinite;
+}
+
+.wip-cone-2 {
+  animation: cone-wobble 2.5s ease-in-out infinite;
+  animation-delay: -1.25s;
+}
+
+@keyframes cone-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(12deg); }
+  75% { transform: rotate(-12deg); }
+}
+
+.wip-worker {
+  font-size: 1rem;
+  display: inline-block;
+  animation: worker-wave 3s ease-in-out infinite;
+}
+
+.wip-worker-2 {
+  animation: worker-dig 2.8s ease-in-out infinite;
+}
+
+@keyframes worker-wave {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  20% { transform: translateY(-3px) rotate(-5deg); }
+  40% { transform: translateY(0) rotate(3deg); }
+  60% { transform: translateY(-2px) rotate(-3deg); }
+  80% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes worker-dig {
+  0%, 100% { transform: translateY(0) scaleX(1); }
+  30% { transform: translateY(-2px) scaleX(-1); }
+  60% { transform: translateY(1px) scaleX(-1); }
+  80% { transform: translateY(0) scaleX(1); }
+}
+
 /* --- under construction card --- */
 .card-wip {
   --accent: #eab308;
@@ -378,6 +443,50 @@ canvas#bg {
   30% { transform: translateY(0) rotate(0deg); }
   45% { transform: translateY(-2px) rotate(5deg); }
   60% { transform: translateY(0) rotate(0deg); }
+}
+
+/* tiny construction decorations */
+.wip-deco {
+  position: absolute;
+  font-size: 0.6rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+
+.card-wip:hover .wip-deco,
+.card-wip:active .wip-deco {
+  opacity: 1;
+}
+
+.wip-deco-1 {
+  top: 4px; right: 12px;
+  animation: deco-float-1 3s ease-in-out infinite;
+}
+.wip-deco-2 {
+  bottom: 4px; right: 36px;
+  animation: deco-float-2 3.5s ease-in-out infinite;
+  animation-delay: -1s;
+}
+.wip-deco-3 {
+  top: 50%; left: 4px;
+  transform: translateY(-50%);
+  animation: deco-float-3 2.8s ease-in-out infinite;
+  animation-delay: -0.5s;
+}
+
+@keyframes deco-float-1 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(10deg); }
+}
+@keyframes deco-float-2 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(-8deg); }
+}
+@keyframes deco-float-3 {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50% { transform: translateX(3px) rotate(6deg); }
 }
 
 .card-wip .card-body { min-width: 0; }
@@ -784,6 +893,14 @@ canvas#bg {
       <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
 
+    <div class="wip-divider">
+      <span class="wip-cone wip-cone-1">🚧</span>
+      <span class="wip-worker">👷</span>
+      <span class="wip-label">under construction</span>
+      <span class="wip-worker wip-worker-2">👷‍♀️</span>
+      <span class="wip-cone wip-cone-2">🚧</span>
+    </div>
+
     <div class="card-wip wip-visualiser" data-wip="visualiser">
       <div class="card-icon"><span>🎬</span></div>
       <div class="card-body">
@@ -791,6 +908,9 @@ canvas#bg {
         <div class="card-sub wip-sub">generate transit videos from gtfs</div>
       </div>
       <div class="wip-progress"><div class="wip-progress-bar"></div></div>
+      <span class="wip-deco wip-deco-1">🔨</span>
+      <span class="wip-deco wip-deco-2">✨</span>
+      <span class="wip-deco wip-deco-3">🦺</span>
     </div>
 
     <div class="card-wip wip-archive" data-wip="archive">
@@ -800,6 +920,9 @@ canvas#bg {
         <div class="card-sub wip-sub">rescuing nz's disappearing journalism</div>
       </div>
       <div class="wip-progress"><div class="wip-progress-bar"></div></div>
+      <span class="wip-deco wip-deco-1">⛏️</span>
+      <span class="wip-deco wip-deco-2">💡</span>
+      <span class="wip-deco wip-deco-3">🧱</span>
     </div>
 
     <div class="card-wip wip-hansard" data-wip="hansard">
@@ -809,6 +932,9 @@ canvas#bg {
         <div class="card-sub wip-sub">an amateur hansard for nz</div>
       </div>
       <div class="wip-progress"><div class="wip-progress-bar"></div></div>
+      <span class="wip-deco wip-deco-1">🪚</span>
+      <span class="wip-deco wip-deco-2">⚡</span>
+      <span class="wip-deco wip-deco-3">🔩</span>
     </div>
 
     <div class="card-wip wip-monitor" data-wip="monitor">
@@ -818,6 +944,9 @@ canvas#bg {
         <div class="card-sub wip-sub">automated bulletin transcription</div>
       </div>
       <div class="wip-progress"><div class="wip-progress-bar"></div></div>
+      <span class="wip-deco wip-deco-1">🪛</span>
+      <span class="wip-deco wip-deco-2">🌟</span>
+      <span class="wip-deco wip-deco-3">🏗️</span>
     </div>
 
   </main>
