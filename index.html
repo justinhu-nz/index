@@ -291,6 +291,157 @@ canvas#bg {
 .card:nth-child(4) .card-icon { background: linear-gradient(140deg, #ffedd5, #ffddb8); }
 .card:nth-child(5) .card-icon { background: linear-gradient(140deg, #fecaca, #f9a870); }
 
+/* --- under construction card --- */
+.card-wip {
+  --accent: #eab308;
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 1.25rem;
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px dashed color-mix(in srgb, #eab308 40%, transparent);
+  border-radius: 18px;
+  text-decoration: none;
+  color: var(--text);
+  cursor: default;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* animated hazard stripes background */
+.card-wip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    rgba(234, 179, 8, 0.04) 8px,
+    rgba(234, 179, 8, 0.04) 16px
+  );
+  background-size: 22.6px 22.6px;
+  animation: stripe-scroll 1.5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes stripe-scroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 22.6px 22.6px; }
+}
+
+/* pulsing glow border */
+.card-wip::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 19px;
+  background: linear-gradient(90deg, rgba(234,179,8,0.15), rgba(251,146,60,0.15), rgba(234,179,8,0.15));
+  background-size: 200% 100%;
+  animation: glow-sweep 3s ease-in-out infinite;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+@keyframes glow-sweep {
+  0%, 100% { background-position: 0% 50%; opacity: 0.3; }
+  50% { background-position: 100% 50%; opacity: 0.7; }
+}
+
+.card-wip .card-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  background: linear-gradient(140deg, #fef9c3, #fde68a);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.card-wip .card-icon span {
+  display: inline-block;
+  animation: hard-hat-bounce 2s ease-in-out infinite;
+}
+
+@keyframes hard-hat-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  15% { transform: translateY(-4px) rotate(-8deg); }
+  30% { transform: translateY(0) rotate(0deg); }
+  45% { transform: translateY(-2px) rotate(5deg); }
+  60% { transform: translateY(0) rotate(0deg); }
+}
+
+.card-wip .card-body { min-width: 0; }
+
+.card-wip .card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.card-wip .card-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--dim);
+  margin-top: 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+/* progress bar */
+.wip-progress {
+  width: 2.5rem;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(234, 179, 8, 0.12);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.wip-progress-bar {
+  height: 100%;
+  width: 35%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #eab308, #fb923c);
+  animation: progress-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes progress-pulse {
+  0%, 100% { width: 25%; opacity: 0.7; }
+  50% { width: 45%; opacity: 1; }
+}
+
+/* hover & tap states */
+.card-wip:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
+}
+
+@media (hover: hover) {
+  .card-wip:hover {
+    background: rgba(255,255,255,0.7);
+    border-color: color-mix(in srgb, #eab308 55%, transparent);
+    box-shadow:
+      0 0 0 1px rgba(234, 179, 8, 0.06),
+      0 12px 40px -10px rgba(234, 179, 8, 0.12),
+      0 0 60px -20px rgba(234, 179, 8, 0.15);
+  }
+  .card-wip:hover .card-icon {
+    transform: scale(1.15) rotate(-6deg);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card-wip:hover .card-sub { color: var(--mid); }
+}
+
 /* text */
 .card-body { min-width: 0; }
 
@@ -550,6 +701,15 @@ canvas#bg {
       <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
 
+    <div class="card-wip" id="card-wip">
+      <div class="card-icon"><span>🚧</span></div>
+      <div class="card-body">
+        <div class="card-title">More Coming Soon</div>
+        <div class="card-sub" id="wip-sub">something's brewing...</div>
+      </div>
+      <div class="wip-progress"><div class="wip-progress-bar"></div></div>
+    </div>
+
   </main>
 
 </div>
@@ -560,7 +720,7 @@ canvas#bg {
   <span class="s-sep">|</span>
   <span id="ft-location">auckland</span>
   <span class="s-sep">|</span>
-  <span id="ft-count">5 things</span>
+  <span id="ft-count">5 things + 1 brewing</span>
 </div>
 
 <div class="kbd-hint">press <kbd>1</kbd>–<kbd>5</kbd> to open</div>
@@ -886,6 +1046,50 @@ if (matchMedia('(hover: none)').matches && window.DeviceMotionEvent) {
   document.getElementById('footer-pill').addEventListener('click', () => {
     if (navigator.vibrate) navigator.vibrate(5);
     facts[0]();
+  });
+})();
+
+// --- under construction card: tappable easter egg ---
+(function() {
+  const wip = document.getElementById('card-wip');
+  const sub = document.getElementById('wip-sub');
+  const icon = wip.querySelector('.card-icon span');
+  const messages = [
+    { text: "something's brewing...", emoji: '🚧' },
+    { text: 'hammering away...', emoji: '🔨' },
+    { text: 'laying the foundation', emoji: '🏗️' },
+    { text: 'connecting the pipes', emoji: '🔧' },
+    { text: 'almost maybe soon™', emoji: '👷' },
+    { text: 'compiling the vibes', emoji: '⚙️' },
+    { text: 'npm install patience', emoji: '📦' },
+    { text: 'ETA: when it\'s ready', emoji: '🪄' },
+  ];
+  let idx = 0;
+
+  wip.addEventListener('click', () => {
+    idx = (idx + 1) % messages.length;
+    if (navigator.vibrate) navigator.vibrate(8);
+
+    // animate out
+    sub.style.transition = 'none';
+    sub.style.opacity = '0';
+    sub.style.transform = 'translateY(4px)';
+    icon.style.transition = 'none';
+    icon.style.opacity = '0';
+    icon.style.transform = 'scale(0.5) rotate(-20deg)';
+
+    setTimeout(() => {
+      sub.textContent = messages[idx].text;
+      icon.textContent = messages[idx].emoji;
+
+      sub.style.transition = 'opacity 0.25s, transform 0.25s cubic-bezier(0.22,1,0.36,1)';
+      sub.style.opacity = '1';
+      sub.style.transform = 'translateY(0)';
+
+      icon.style.transition = 'opacity 0.3s, transform 0.4s cubic-bezier(0.22,1,0.36,1)';
+      icon.style.opacity = '1';
+      icon.style.transform = 'scale(1) rotate(0deg)';
+    }, 120);
   });
 })();
 
