@@ -183,14 +183,15 @@ canvas#bg {
   transform-style: preserve-3d;
 }
 
-.card:nth-child(1) { --accent: var(--c1); }
-.card:nth-child(2) { --accent: var(--c2); }
-.card:nth-child(3) { --accent: var(--c3); }
-.card:nth-child(4) { --accent: var(--c4); }
-.card:nth-child(5) { --accent: #e05a2b; }
-.card:nth-child(6) { --accent: #ef476f; }
-.card:nth-child(7) { --accent: #06b6d4; }
-.card:nth-child(8) { --accent: #0284c7; }
+.card[data-key="1"] { --accent: var(--c1); }
+.card[data-key="2"] { --accent: var(--c2); }
+.card[data-key="3"] { --accent: var(--c3); }
+.card[data-key="4"] { --accent: var(--c4); }
+.card[data-key="5"] { --accent: #e05a2b; }
+.card[data-key="6"] { --accent: #ef476f; }
+.card[data-key="7"] { --accent: #06b6d4; }
+.card[data-key="8"] { --accent: #0284c7; }
+.card[data-key="9"] { --accent: #16a34a; }
 
 /* touch feedback — scale down on press */
 .card:active {
@@ -288,14 +289,38 @@ canvas#bg {
   transform: scale(1.1) rotate(-5deg);
 }
 
-.card:nth-child(1) .card-icon { background: linear-gradient(140deg, #dbeafe, #bfcffa); }
-.card:nth-child(2) .card-icon { background: linear-gradient(140deg, #ede9fe, #ddd2fc); }
-.card:nth-child(3) .card-icon { background: linear-gradient(140deg, #d1fae5, #a8f0cd); }
-.card:nth-child(4) .card-icon { background: linear-gradient(140deg, #ffedd5, #ffddb8); }
-.card:nth-child(5) .card-icon { background: linear-gradient(140deg, #fecaca, #f9a870); }
-.card:nth-child(6) .card-icon { background: linear-gradient(140deg, #ffe4e6, #fda4af); }
-.card:nth-child(7) .card-icon { background: linear-gradient(140deg, #cffafe, #67e8f9); }
-.card:nth-child(8) .card-icon { background: linear-gradient(140deg, #dbeafe, #7dd3fc); }
+.card[data-key="1"] .card-icon { background: linear-gradient(140deg, #dbeafe, #bfcffa); }
+.card[data-key="2"] .card-icon { background: linear-gradient(140deg, #ede9fe, #ddd2fc); }
+.card[data-key="3"] .card-icon { background: linear-gradient(140deg, #d1fae5, #a8f0cd); }
+.card[data-key="4"] .card-icon { background: linear-gradient(140deg, #ffedd5, #ffddb8); }
+.card[data-key="5"] .card-icon { background: linear-gradient(140deg, #fecaca, #f9a870); }
+.card[data-key="6"] .card-icon { background: linear-gradient(140deg, #ffe4e6, #fda4af); }
+.card[data-key="7"] .card-icon { background: linear-gradient(140deg, #cffafe, #67e8f9); }
+.card[data-key="8"] .card-icon { background: linear-gradient(140deg, #dbeafe, #7dd3fc); }
+.card[data-key="9"] .card-icon { background: linear-gradient(140deg, #dcfce7, #86efac); }
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.25rem 0 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.56rem;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+.section-divider-spaced {
+  margin-top: 0.8rem;
+}
 
 /* --- construction zone divider --- */
 .wip-divider {
@@ -854,6 +879,28 @@ canvas#bg {
 
   <main class="projects" id="projects">
 
+    <div class="section-divider"><span>new apps</span></div>
+
+    <a href="https://justinhu-nz.github.io/mealprep/" class="card" target="_blank" rel="noopener" data-key="9">
+      <div class="card-icon" style="--float-dur:3.9s;--float-delay:3.8s"><span>🥗</span></div>
+      <div class="card-body">
+        <div class="card-title">MealPrep</div>
+        <div class="card-sub">meal planning for busy weeks</div>
+      </div>
+      <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+    </a>
+
+    <a href="https://bsky.app/profile/95nowplaying.bsky.social" class="card" target="_blank" rel="noopener" data-key="8">
+      <div class="card-icon" style="--float-dur:4.1s;--float-delay:3.4s"><span>🦋</span></div>
+      <div class="card-body">
+        <div class="card-title">95bFM Now Playing</div>
+        <div class="card-sub">on-air track updates on bluesky</div>
+      </div>
+      <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+    </a>
+
+    <div class="section-divider section-divider-spaced"><span>all apps</span></div>
+
     <a href="https://justinhu-nz.github.io/RadioLive/" class="card" target="_blank" rel="noopener" data-key="1">
       <div class="card-icon" style="--float-dur:3.8s;--float-delay:0s"><span>📻</span></div>
       <div class="card-body">
@@ -917,15 +964,6 @@ canvas#bg {
       <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
     </a>
 
-    <a href="https://bsky.app/profile/95nowplaying.bsky.social" class="card" target="_blank" rel="noopener" data-key="8">
-      <div class="card-icon" style="--float-dur:4.1s;--float-delay:3.4s"><span>🦋</span></div>
-      <div class="card-body">
-        <div class="card-title">95bFM Now Playing</div>
-        <div class="card-sub">on-air track updates on bluesky</div>
-      </div>
-      <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-    </a>
-
     <div class="wip-divider">
       <span class="wip-cone wip-cone-1">🚧</span>
       <span class="wip-worker">👷</span>
@@ -980,10 +1018,10 @@ canvas#bg {
   <span class="s-sep">|</span>
   <span id="ft-location">auckland</span>
   <span class="s-sep">|</span>
-  <span id="ft-count">8 things + 3 brewing</span>
+  <span id="ft-count">9 things + 3 brewing</span>
 </div>
 
-<div class="kbd-hint">press <kbd>1</kbd>–<kbd>8</kbd> to open</div>
+<div class="kbd-hint">press <kbd>1</kbd>–<kbd>9</kbd> to open</div>
 
 <script>
 // --- animated gradient background (throttled on mobile) ---
