@@ -334,6 +334,8 @@ canvas#bg {
 .card:nth-child(10) { --accent: #c2410c; }
 .card:nth-child(11) { --accent: #2563eb; }
 .card:nth-child(12) { --accent: #4f46e5; }
+.card:nth-child(13) { --accent: #0891b2; }
+.card:nth-child(14) { --accent: #7c3aed; }
 .card:nth-of-type(1) { animation-delay: 0.05s; }
 .card:nth-of-type(2) { animation-delay: 0.1s; }
 .card:nth-of-type(3) { animation-delay: 0.15s; }
@@ -346,6 +348,8 @@ canvas#bg {
 .card:nth-of-type(10) { animation-delay: 0.5s; }
 .card:nth-of-type(11) { animation-delay: 0.55s; }
 .card:nth-of-type(12) { animation-delay: 0.6s; }
+.card:nth-of-type(13) { animation-delay: 0.65s; }
+.card:nth-of-type(14) { animation-delay: 0.7s; }
 
 @keyframes card-rise {
   from { opacity: 0; transform: translateY(18px) scale(0.985); }
@@ -463,6 +467,8 @@ canvas#bg {
 .card[data-key="10"] .card-icon { background: linear-gradient(140deg, #ffedd5, #fdba74); }
 .card[data-key="11"] .card-icon { background: linear-gradient(140deg, #e0f2fe, #93c5fd); }
 .card[data-key="12"] .card-icon { background: linear-gradient(140deg, #e0e7ff, #c7d2fe); }
+.card[data-key="13"] .card-icon { background: linear-gradient(140deg, #cffafe, #67e8f9); }
+.card[data-key="14"] .card-icon { background: linear-gradient(140deg, #ede9fe, #c4b5fd); }
 
 .card:nth-child(1) .card-icon { background: linear-gradient(140deg, #dbeafe, #bfcffa); }
 .card:nth-child(2) .card-icon { background: linear-gradient(140deg, #ede9fe, #ddd2fc); }
@@ -476,6 +482,8 @@ canvas#bg {
 .card:nth-child(10) .card-icon { background: linear-gradient(140deg, #ffedd5, #fdba74); }
 .card:nth-child(11) .card-icon { background: linear-gradient(140deg, #e0f2fe, #93c5fd); }
 .card:nth-child(12) .card-icon { background: linear-gradient(140deg, #e0e7ff, #c7d2fe); }
+.card:nth-child(13) .card-icon { background: linear-gradient(140deg, #cffafe, #67e8f9); }
+.card:nth-child(14) .card-icon { background: linear-gradient(140deg, #ede9fe, #c4b5fd); }
 
 .card[data-key="1"] { --accent: var(--c1); }
 .card[data-key="2"] { --accent: var(--c2); }
@@ -489,6 +497,8 @@ canvas#bg {
 .card[data-key="10"] { --accent: #c2410c; }
 .card[data-key="11"] { --accent: #2563eb; }
 .card[data-key="12"] { --accent: #4f46e5; }
+.card[data-key="13"] { --accent: #0891b2; }
+.card[data-key="14"] { --accent: #7c3aed; }
 
 .card[data-key="1"] .card-icon { background: linear-gradient(140deg, #dbeafe, #bfcffa); }
 .card[data-key="2"] .card-icon { background: linear-gradient(140deg, #ede9fe, #ddd2fc); }
@@ -502,6 +512,8 @@ canvas#bg {
 .card[data-key="10"] .card-icon { background: linear-gradient(140deg, #ffedd5, #fdba74); }
 .card[data-key="11"] .card-icon { background: linear-gradient(140deg, #e0f2fe, #93c5fd); }
 .card[data-key="12"] .card-icon { background: linear-gradient(140deg, #e0e7ff, #c7d2fe); }
+.card[data-key="13"] .card-icon { background: linear-gradient(140deg, #cffafe, #67e8f9); }
+.card[data-key="14"] .card-icon { background: linear-gradient(140deg, #ede9fe, #c4b5fd); }
 
 /* --- construction zone divider --- */
 .wip-divider {
@@ -1407,6 +1419,28 @@ canvas#bg {
         </div>
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
+
+      <a href="https://justinhu-nz.github.io/web4/" class="card" target="_blank" rel="noopener" data-key="13">
+        <div class="card-icon" style="--float-dur:4.4s;--float-delay:5.4s"><span>🌐</span></div>
+        <div class="card-body">
+          <div class="card-topline">
+            <div class="card-title">AT Network Map 2026</div>
+          </div>
+          <div class="card-sub">zoomable auckland transport network map</div>
+        </div>
+        <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+      </a>
+
+      <a href="https://justinhu-nz.github.io/web4/compare.html" class="card" target="_blank" rel="noopener" data-key="14">
+        <div class="card-icon" style="--float-dur:3.7s;--float-delay:5.8s"><span>⚖️</span></div>
+        <div class="card-body">
+          <div class="card-topline">
+            <div class="card-title">AT Network 2020 vs 2026</div>
+          </div>
+          <div class="card-sub">fade between auckland network maps</div>
+        </div>
+        <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+      </a>
     </section>
 
     <section class="wip-section" aria-label="Projects under construction">
@@ -1464,7 +1498,7 @@ canvas#bg {
       <span class="s-sep">|</span>
       <span id="ft-location">auckland</span>
       <span class="s-sep">|</span>
-      <span id="ft-count">12 things + 2 brewing</span>
+      <span id="ft-count">14 things + 2 brewing</span>
     </span>
   </span>
 </div>
