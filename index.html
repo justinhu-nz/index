@@ -289,6 +289,30 @@ canvas#bg {
 
 .live-grid {
   display: grid;
+  gap: 1.35rem;
+}
+
+.category-section { display: grid; gap: 0.55rem; }
+
+.category-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font: 500 0.64rem/1 'JetBrains Mono', monospace;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.category-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+.category-grid {
+  display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.65rem;
   perspective: 1200px;
@@ -499,6 +523,10 @@ canvas#bg {
 .card[data-key="12"] { --accent: #4f46e5; }
 .card[data-key="13"] { --accent: #0891b2; }
 .card[data-key="14"] { --accent: #7c3aed; }
+.card[data-key="15"] { --accent: #d97706; }
+.card[data-key="16"] { --accent: #059669; }
+.card[data-key="17"] { --accent: #0e7490; }
+.card[data-key="18"] { --accent: #2563eb; }
 
 .card[data-key="1"] .card-icon { background: linear-gradient(140deg, #dbeafe, #bfcffa); }
 .card[data-key="2"] .card-icon { background: linear-gradient(140deg, #ede9fe, #ddd2fc); }
@@ -514,6 +542,10 @@ canvas#bg {
 .card[data-key="12"] .card-icon { background: linear-gradient(140deg, #e0e7ff, #c7d2fe); }
 .card[data-key="13"] .card-icon { background: linear-gradient(140deg, #cffafe, #67e8f9); }
 .card[data-key="14"] .card-icon { background: linear-gradient(140deg, #ede9fe, #c4b5fd); }
+.card[data-key="15"] .card-icon { background: linear-gradient(140deg, #fef3c7, #fcd34d); }
+.card[data-key="16"] .card-icon { background: linear-gradient(140deg, #d1fae5, #6ee7b7); }
+.card[data-key="17"] .card-icon { background: linear-gradient(140deg, #cffafe, #67e8f9); }
+.card[data-key="18"] .card-icon { background: linear-gradient(140deg, #dbeafe, #93c5fd); }
 
 /* --- construction zone divider --- */
 .wip-divider {
@@ -1288,7 +1320,7 @@ canvas#bg {
   <main class="projects" id="projects">
 
     <section class="live-grid" id="live-grid" aria-label="Live projects">
-      <a href="https://justinhu-nz.github.io/RadioLive/" class="card" target="_blank" rel="noopener" data-key="1">
+      <a href="https://justinhu-nz.github.io/RadioLive/" class="card" target="_blank" rel="noopener" data-key="1" data-category="media">
         <div class="card-icon" style="--float-dur:3.8s;--float-delay:0s"><span>📻</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1299,7 +1331,7 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/auckland-transit-realtime/" class="card" target="_blank" rel="noopener" data-key="2">
+      <a href="https://justinhu-nz.github.io/auckland-transit-realtime/" class="card" target="_blank" rel="noopener" data-key="2" data-category="transit">
         <div class="card-icon" style="--float-dur:4.2s;--float-delay:0.5s"><span>🚌</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1310,18 +1342,18 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/imagecroponline/" class="card" target="_blank" rel="noopener" data-key="3">
+      <a href="https://justinhu-nz.github.io/imagecroponline/" class="card" target="_blank" rel="noopener" data-key="3" data-category="tools">
         <div class="card-icon" style="--float-dur:3.5s;--float-delay:1s"><span>✂️</span></div>
         <div class="card-body">
           <div class="card-topline">
-            <div class="card-title">Image Crop Online</div>
+            <div class="card-title">imageCrop</div>
           </div>
           <div class="card-sub">batch 16:9 crop with blur fill</div>
         </div>
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/GTFS-frequencyMapper/" class="card" target="_blank" rel="noopener" data-key="4">
+      <a href="https://justinhu-nz.github.io/GTFS-frequencyMapper/" class="card" target="_blank" rel="noopener" data-key="4" data-category="transit">
         <div class="card-icon" style="--float-dur:4.5s;--float-delay:1.5s"><span>🗺️</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1332,7 +1364,7 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/zbdownloader/" class="card" target="_blank" rel="noopener" data-key="5">
+      <a href="https://justinhu-nz.github.io/zbdownloader/" class="card" target="_blank" rel="noopener" data-key="5" data-category="media">
         <div class="card-icon" style="--float-dur:3.6s;--float-delay:2s"><span>🔊</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1343,7 +1375,7 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/rnz-bulletins-archive/" class="card" target="_blank" rel="noopener" data-key="6">
+      <a href="https://justinhu-nz.github.io/rnz-bulletins-archive/" class="card" target="_blank" rel="noopener" data-key="6" data-category="media">
         <div class="card-icon" style="--float-dur:4.0s;--float-delay:2.5s"><span>📰</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1354,7 +1386,7 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/GTFSTransitVisualiser/" class="card" target="_blank" rel="noopener" data-key="7">
+      <a href="https://justinhu-nz.github.io/GTFSTransitVisualiser/" class="card" target="_blank" rel="noopener" data-key="7" data-category="transit">
         <div class="card-icon" style="--float-dur:3.7s;--float-delay:3.0s"><span>🎬</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1365,7 +1397,7 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://bsky.app/profile/95nowplaying.bsky.social" class="card" target="_blank" rel="noopener" data-key="8">
+      <a href="https://bsky.app/profile/95nowplaying.bsky.social" class="card" target="_blank" rel="noopener" data-key="8" data-category="media">
         <div class="card-icon" style="--float-dur:4.1s;--float-delay:3.4s"><span>🦋</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1376,7 +1408,7 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/mealprep/" class="card" target="_blank" rel="noopener" data-key="9">
+      <a href="https://justinhu-nz.github.io/mealprep/" class="card" target="_blank" rel="noopener" data-key="9" data-category="tools">
         <div class="card-icon" style="--float-dur:3.9s;--float-delay:3.8s"><span>🥗</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1387,7 +1419,7 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="../nz-newsstand/" class="card" target="_blank" rel="noopener" data-key="10">
+      <a href="../nz-newsstand/" class="card" target="_blank" rel="noopener" data-key="10" data-category="media">
         <div class="card-icon" style="--float-dur:4.3s;--float-delay:4.2s"><span>🗞️</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1398,7 +1430,7 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/AT-Metro-sign-geneator" class="card" target="_blank" rel="noopener" data-key="11">
+      <a href="https://justinhu-nz.github.io/AT-Metro-sign-geneator" class="card" target="_blank" rel="noopener" data-key="11" data-category="transit">
         <div class="card-icon" style="--float-dur:3.8s;--float-delay:4.6s"><span>🚏</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1409,7 +1441,7 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/selectcommittee-transcripts/" class="card" target="_blank" rel="noopener" data-key="12">
+      <a href="https://justinhu-nz.github.io/selectcommittee-transcripts/" class="card" target="_blank" rel="noopener" data-key="12" data-category="civic">
         <div class="card-icon" style="--float-dur:4.0s;--float-delay:5.0s"><span>🏛️</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1420,7 +1452,29 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/auckland-transit-map/" class="card" target="_blank" rel="noopener" data-key="13">
+      <a href="https://justinhu-nz.github.io/nz-selectcommittee-calendar/" class="card" target="_blank" rel="noopener" data-key="15" data-category="civic">
+        <div class="card-icon" style="--float-dur:4.2s;--float-delay:5.2s"><span>🗓️</span></div>
+        <div class="card-body">
+          <div class="card-topline">
+            <div class="card-title">Select Committee Calendar</div>
+          </div>
+          <div class="card-sub">upcoming nz select committee meetings</div>
+        </div>
+        <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+      </a>
+
+      <a href="https://justinhu-nz.github.io/pc120-viewer" class="card" target="_blank" rel="noopener" data-key="16" data-category="civic">
+        <div class="card-icon" style="--float-dur:4.1s;--float-delay:5.5s"><span>🏙️</span></div>
+        <div class="card-body">
+          <div class="card-topline">
+            <div class="card-title">PC120 Viewer</div>
+          </div>
+          <div class="card-sub">explore proposed auckland zoning changes</div>
+        </div>
+        <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+      </a>
+
+      <a href="https://justinhu-nz.github.io/auckland-transit-map/" class="card" target="_blank" rel="noopener" data-key="13" data-category="transit">
         <div class="card-icon" style="--float-dur:4.4s;--float-delay:5.4s"><span>🌐</span></div>
         <div class="card-body">
           <div class="card-topline">
@@ -1431,13 +1485,35 @@ canvas#bg {
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
 
-      <a href="https://justinhu-nz.github.io/auckland-transit-map/compare.html" class="card" target="_blank" rel="noopener" data-key="14">
+      <a href="https://justinhu-nz.github.io/auckland-transit-map/compare.html" class="card" target="_blank" rel="noopener" data-key="14" data-category="transit">
         <div class="card-icon" style="--float-dur:3.7s;--float-delay:5.8s"><span>⚖️</span></div>
         <div class="card-body">
           <div class="card-topline">
             <div class="card-title">AT Network 2020 vs 2026</div>
           </div>
           <div class="card-sub">fade between auckland network maps</div>
+        </div>
+        <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+      </a>
+
+      <a href="https://justinhu-nz.github.io/realtimeboard" class="card" target="_blank" rel="noopener" data-key="17" data-category="transit">
+        <div class="card-icon" style="--float-dur:3.9s;--float-delay:6.1s"><span>🚉</span></div>
+        <div class="card-body">
+          <div class="card-topline">
+            <div class="card-title">Auckland Live Departures</div>
+          </div>
+          <div class="card-sub">build a live public transport departure board</div>
+        </div>
+        <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+      </a>
+
+      <a href="https://justinhu-nz.github.io/at-occupancy" class="card" target="_blank" rel="noopener" data-key="18" data-category="transit">
+        <div class="card-icon" style="--float-dur:4.2s;--float-delay:6.4s"><span>👥</span></div>
+        <div class="card-body">
+          <div class="card-topline">
+            <div class="card-title">AT/Metlink Live Occupancy</div>
+          </div>
+          <div class="card-sub">live passenger estimates</div>
         </div>
         <div class="card-go"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
       </a>
@@ -1457,7 +1533,6 @@ canvas#bg {
           <div class="card-icon"><span>🗞️</span></div>
           <div class="card-body">
             <div class="card-title">No Lost Stories Archive</div>
-            <div class="card-sub wip-sub">rescuing nz's disappearing journalism</div>
           </div>
           <div class="wip-progress"><div class="wip-progress-bar"></div></div>
           <span class="wip-deco wip-deco-1">⛏️</span>
@@ -1469,7 +1544,6 @@ canvas#bg {
           <div class="card-icon"><span>📻</span></div>
           <div class="card-body">
             <div class="card-title">Radio News Monitor</div>
-            <div class="card-sub wip-sub">automated bulletin transcription</div>
           </div>
           <div class="wip-progress"><div class="wip-progress-bar"></div></div>
           <span class="wip-deco wip-deco-1">🪛</span>
@@ -1498,7 +1572,7 @@ canvas#bg {
       <span class="s-sep">|</span>
       <span id="ft-location">auckland</span>
       <span class="s-sep">|</span>
-      <span id="ft-count">14 things + 2 brewing</span>
+      <span id="ft-count">18 things + 2 brewing</span>
     </span>
   </span>
 </div>
@@ -1510,21 +1584,43 @@ const isHoverDevice = matchMedia('(hover: hover)').matches;
 const liveCards = Array.from(document.querySelectorAll('.card'));
 const wipCards = Array.from(document.querySelectorAll('.card-wip'));
 
-function shuffleLiveCards({ animate = false, vibrate = false } = {}) {
+// --- group every project into an always-visible category ---
+(function() {
   const container = document.getElementById('live-grid');
-  if (!container) return;
+  const categories = [
+    ['media', 'Media'],
+    ['civic', 'Parliament / Local Govt'],
+    ['transit', 'Transit'],
+    ['tools', 'Tools']
+  ];
 
-  const cards = Array.from(container.querySelectorAll('.card'));
-  if (cards.length < 2) return;
+  categories.forEach(([key, label]) => {
+    const section = document.createElement('section');
+    section.className = 'category-section';
+    section.setAttribute('aria-labelledby', `category-${key}`);
+    section.innerHTML = `<h2 class="category-title" id="category-${key}">${label}</h2><div class="category-grid"></div>`;
+    liveCards.filter(card => card.dataset.category === key)
+      .forEach(card => section.querySelector('.category-grid').appendChild(card));
+    container.appendChild(section);
+  });
+})();
+
+function shuffleLiveCards({ animate = false, vibrate = false } = {}) {
+  const containers = Array.from(document.querySelectorAll('.category-grid'));
+  if (!containers.length) return;
+  const cards = containers.flatMap(container => Array.from(container.querySelectorAll('.card')));
 
   if (vibrate && navigator.vibrate) navigator.vibrate([15, 50, 15]);
 
   const reorder = () => {
-    for (let i = cards.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [cards[i], cards[j]] = [cards[j], cards[i]];
-    }
-    cards.forEach(card => container.appendChild(card));
+    containers.forEach(container => {
+      const group = Array.from(container.querySelectorAll('.card'));
+      for (let i = group.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [group[i], group[j]] = [group[j], group[i]];
+      }
+      group.forEach(card => container.appendChild(card));
+    });
   };
 
   if (!animate || reduceMotionQuery.matches) {
@@ -2242,38 +2338,6 @@ if (matchMedia('(hover: none)').matches && window.DeviceMotionEvent) {
     ],
   };
 
-  wipCards.forEach(wip => {
-    const sub = wip.querySelector('.wip-sub');
-    const icon = wip.querySelector('.card-icon span');
-    const key = wip.dataset.wip;
-    const messages = projectMessages[key];
-    let idx = 0;
-
-    wip.addEventListener('click', () => {
-      idx = (idx + 1) % messages.length;
-      if (navigator.vibrate) navigator.vibrate(8);
-
-      sub.style.transition = 'none';
-      sub.style.opacity = '0';
-      sub.style.transform = 'translateY(4px)';
-      icon.style.transition = 'none';
-      icon.style.opacity = '0';
-      icon.style.transform = 'scale(0.5) rotate(-20deg)';
-
-      setTimeout(() => {
-        sub.textContent = messages[idx].text;
-        icon.textContent = messages[idx].emoji;
-
-        sub.style.transition = 'opacity 0.25s, transform 0.25s cubic-bezier(0.22,1,0.36,1)';
-        sub.style.opacity = '1';
-        sub.style.transform = 'translateY(0)';
-
-        icon.style.transition = 'opacity 0.3s, transform 0.4s cubic-bezier(0.22,1,0.36,1)';
-        icon.style.opacity = '1';
-        icon.style.transform = 'scale(1) rotate(0deg)';
-      }, 120);
-    });
-  });
 })();
 
 // --- gyroscope tilt on mobile ---
